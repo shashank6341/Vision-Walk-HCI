@@ -229,13 +229,11 @@ class CameraVC: UIViewController {
                 } else {
                     let identification = classification.identifier
                     let confidence = Int(classification.confidence * 100)
-                    //                UNDO Later - Tenative
-                    //                self.identificationLbl.text = identification
+                                    self.identificationLbl.text = identification
                     self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
                     if languageSelection == "en-US" {
                         let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
-                        //                UNDO Later - Tenative
-                        //                    synthesizeSpeech(fromString: completeSentence)
+                                            synthesizeSpeech(fromString: completeSentence)
                         break
                     } else {
                         let completeSentence = "ये है \(identification), \(confidence) प्रतिशत यकीन है"
@@ -291,25 +289,31 @@ extension CameraVC: AVCapturePhotoCaptureDelegate {
         } else {
             photoData = photo.fileDataRepresentation()
             
-            do {
-                let model = try VNCoreMLModel(for: Inceptionv3().model)
-                let request = VNCoreMLRequest(model: model, completionHandler: resultsMethod)
-                let handler = VNImageRequestHandler(data: photoData!)
-                try handler.perform([request])
-            } catch {
-                debugPrint(error)
-            }
-            
             let image = UIImage(data: photoData!)
             self.captureImageView.image = image
             
-            // Unwrap the optional image before passing it to the function
-            if let unwrappedImage = image {
-                sendImageToServer(image: unwrappedImage)
-            } else {
-                print("Error: Captured image is nil")
+            
+            if(self.isInternetAvailable)
+            {
+                // Unwrap the optional image before passing it to the function
+                if let unwrappedImage = image {
+                    sendImageToServer(image: unwrappedImage)
+                } else {
+                    print("Error: Captured image is nil")
+                }
+            }
+            else {
+                do {
+                    let model = try VNCoreMLModel(for: Inceptionv3().model)
+                    let request = VNCoreMLRequest(model: model, completionHandler: resultsMethod)
+                    let handler = VNImageRequestHandler(data: photoData!)
+                    try handler.perform([request])
+                } catch {
+                    debugPrint(error)
+                }
             }
             
+
             captureImageView.isHidden = false
             captureImageView.alpha = 1.0
             
