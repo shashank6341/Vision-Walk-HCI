@@ -1,14 +1,34 @@
 # Vision-Walk-HCI
 This repository contains the source code for the Vision Walk application.
 
+# Branch Pattern
+
+** Create a new branch for each new feature or a sub-feature for easy debugging. **
+
+- feature/{feature-name}
+- Once tested and working as expected.
+- Create a PR from feature to main.
 
 # Vision Walk Image Captioning Server Setup
 
 - CD to your Directory
 - Run: python3 -m venv LLM
 - activate LLM venv by: source LLM/bin/activate
-- In that directory with LLM (venv) activated run: pip install transformers torch pillow
-- Once installed, modify the image path in the code and run: python image_captioning.py
+- In that directory with LLM (venv) activated run: pip install transformers torch pillow flask
+- Once installed, run: python image_captioning.py. The application will run on localhost port 8090.
+- To expose this locally hosted server for testing on iOS, use ngrok.
+- Install ngrock from brew or there package.
+- Create an account and get your API key, (Instructions on the website).
+- ngrok http #portno of the localhosted application that you want to expose. *This will generate a string of web address use that*
+
+# Vision Walk iOS Setup
+
+- Install Xcode from App Store, It will ask you automatically to install the required SDK of iOS.
+- Clone this project.
+- CD to iOS and run Vision Walk.xcodeproj.
+- Make changes in the CameraVC.swift
+- Reachibility.swift is to check the internet connection.
+
 
 
 <br/>
