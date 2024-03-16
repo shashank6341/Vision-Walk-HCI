@@ -38,4 +38,4 @@ def generate_caption_server():
         return jsonify({'error': 'Failed to process image'}), 500  # Internal server error
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8001)  # Run the server on all interfaces (0.0.0.0)
+    app.run(host='0.0.0.0', port=8089)  # Run the server on all interfaces (0.0.0.0)
