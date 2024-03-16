@@ -1,15 +1,17 @@
 //
-//  ViewController.swift
+//  CameraVC.swift
 //  Vision Walk
 //
-//  Created by Shashank Verma on 14/02/20.
-//  Copyright © 2020 Shashank Verma. All rights reserved.
+//  Created by Shashank Verma on 10/02/24.
+//  Copyright © 2024 Shashank Verma. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 import CoreML
 import Vision
+
+import Alamofire // Network request handler
 
 enum FlashState {
     case off
@@ -106,6 +108,43 @@ class CameraVC: UIViewController {
         
     }
     
+    func sendImageToServer() {
+        // URL of your API server
+        let apiUrl = "https://d26a-132-205-229-32.ngrok-free.app/caption"
+
+        // Load the image from the project bundle
+        guard let image = UIImage(named: "test5.jpg") else {
+            print("Error: Unable to load image from bundle")
+            return
+        }
+
+        // Convert the image to data
+        guard let imageData = image.jpegData(compressionQuality: 0.7) else {
+            print("Error: Unable to convert image to data")
+            return
+        }
+
+        // Send the image data as multipart form data using Alamofire
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(imageData, withName: "image", fileName: "image.jpg", mimeType: "image/jpeg")
+        }, to: apiUrl).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                // Handle success response
+                if let jsonResponse = value as? [String: Any] {
+                    if let caption = jsonResponse["caption"] as? String {
+                        print("Caption: \(caption)")
+                    } else if let error = jsonResponse["error"] as? String {
+                        print("Server Error: \(error)")
+                    }
+                }
+            case .failure(let error):
+                // Handle failure response
+                print("Error: \(error)")
+            }
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         previewLayer.frame = cameraView.bounds
@@ -151,6 +190,8 @@ class CameraVC: UIViewController {
 //        self.cameraView.isUserInteractionEnabled = false
 //        self.spinner.isHidden = false
 //        self.spinner.startAnimating()
+        
+        sendImageToServer()
 //
         let settings = AVCapturePhotoSettings()
         

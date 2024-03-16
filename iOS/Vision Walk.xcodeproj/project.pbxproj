@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,8 @@
 		4FAE46E723F71198000D5BC6 /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE46E623F71198000D5BC6 /* Inceptionv3.mlmodel */; };
 		4FE3D7242456AFF3000A73BD /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE3D7232456AFF3000A73BD /* Onboarding.storyboard */; };
 		4FE3D7262456B25C000A73BD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE3D7252456B25C000A73BD /* OnboardingViewController.swift */; };
+		98B376172BA61BEB00967516 /* test5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98B376162BA61BEB00967516 /* test5.jpg */; };
+		98B3761E2BA623B500967516 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 98B3761D2BA623B500967516 /* Alamofire */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,7 @@
 		4FAE46E623F71198000D5BC6 /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
 		4FE3D7232456AFF3000A73BD /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		4FE3D7252456B25C000A73BD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		98B376162BA61BEB00967516 /* test5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test5.jpg; path = ../../../test5.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +42,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98B3761E2BA623B500967516 /* Alamofire in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -99,6 +103,7 @@
 			isa = PBXGroup;
 			children = (
 				4FAE46E623F71198000D5BC6 /* Inceptionv3.mlmodel */,
+				98B376162BA61BEB00967516 /* test5.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -119,6 +124,9 @@
 			dependencies = (
 			);
 			name = "Vision Walk";
+			packageProductDependencies = (
+				98B3761D2BA623B500967516 /* Alamofire */,
+			);
 			productName = "Vision Walk";
 			productReference = 4FAE46CB23F6E2B4000D5BC6 /* Vision Walk.app */;
 			productType = "com.apple.product-type.application";
@@ -147,6 +155,9 @@
 				Base,
 			);
 			mainGroup = 4FAE46C223F6E2B4000D5BC6;
+			packageReferences = (
+				98B3761C2BA623B500967516 /* XCRemoteSwiftPackageReference "Alamofire" */,
+			);
 			productRefGroup = 4FAE46CC23F6E2B4000D5BC6 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -161,6 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				98B376172BA61BEB00967516 /* test5.jpg in Resources */,
 				4FAE46DB23F6E2B4000D5BC6 /* LaunchScreen.storyboard in Resources */,
 				4FAE46D823F6E2B4000D5BC6 /* Assets.xcassets in Resources */,
 				4FAE46D623F6E2B4000D5BC6 /* Main.storyboard in Resources */,
@@ -378,6 +390,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		98B3761C2BA623B500967516 /* XCRemoteSwiftPackageReference "Alamofire" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Alamofire/Alamofire.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		98B3761D2BA623B500967516 /* Alamofire */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 98B3761C2BA623B500967516 /* XCRemoteSwiftPackageReference "Alamofire" */;
+			productName = Alamofire;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 4FAE46C323F6E2B4000D5BC6 /* Project object */;
 }
