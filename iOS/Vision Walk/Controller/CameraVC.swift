@@ -133,7 +133,10 @@ class CameraVC: UIViewController {
                 // Handle success response
                 if let jsonResponse = value as? [String: Any] {
                     if let caption = jsonResponse["caption"] as? String {
-                        print("Caption: \(caption)")
+//                        print("Caption: \(caption)")
+                        print("\(caption)")
+                        self.identificationLbl.text = "\(caption)"
+                        self.synthesizeSpeech(fromString: caption)
                     } else if let error = jsonResponse["error"] as? String {
                         print("Server Error: \(error)")
                     }
@@ -224,27 +227,25 @@ class CameraVC: UIViewController {
                     synthesizeSpeech(fromString: unknownObjectMessage)
                     break
                 }
-//
-//                synthesizeSpeech(fromString: unknownObjectMessage)
-//                self.confidenceLbl.text = ""
-//                break
+
+                
             } else {
                 let identification = classification.identifier
                 let confidence = Int(classification.confidence * 100)
-                self.identificationLbl.text = identification
+//                UNDO Later - Tenative
+//                self.identificationLbl.text = identification
                 self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
                 if languageSelection == "en-US" {
                     let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
-                    synthesizeSpeech(fromString: completeSentence)
+//                UNDO Later - Tenative
+//                    synthesizeSpeech(fromString: completeSentence)
                     break
                 } else {
                     let completeSentence = "ये है \(identification), \(confidence) प्रतिशत यकीन है"
                     synthesizeSpeech(fromString: completeSentence)
                     break
                 }
-//                let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
-//                synthesizeSpeech(fromString: completeSentence)
-//                break
+
             }
         }
     }
