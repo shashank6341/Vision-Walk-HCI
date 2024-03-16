@@ -32,6 +32,7 @@ class CameraVC: UIViewController {
     var reachability: Reachability?
     var languageSelection: String = "en-US"
     var languageChangedString: String = ""
+    var isInternetAvailable: Bool = true
 
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var captureImageView: UIImageView!
@@ -52,11 +53,13 @@ class CameraVC: UIViewController {
         reachability?.whenReachable = { _ in
             DispatchQueue.main.async {
                 self.internetLbl.text! = "Internet Available"
+                self.isInternetAvailable = true
             }
         }
         reachability?.whenUnreachable = { _ in
             DispatchQueue.main.async {
                 self.internetLbl.text! = "Internet Not Available"
+                self.isInternetAvailable = false
             }
         }
         
@@ -137,6 +140,7 @@ class CameraVC: UIViewController {
                         print("\(caption)")
                         self.identificationLbl.text = "\(caption)"
                         self.synthesizeSpeech(fromString: caption)
+                        self.confidenceLbl.text = "Our model is in beta and make mistakes."
                     } else if let error = jsonResponse["error"] as? String {
                         print("Server Error: \(error)")
                     }
@@ -190,21 +194,12 @@ class CameraVC: UIViewController {
     }
     
     @objc func didTapCameraView() {
-//        self.cameraView.isUserInteractionEnabled = false
-//        self.spinner.isHidden = false
-//        self.spinner.startAnimating()
-        
-//        sendImageToServer()
-//
+
         let settings = AVCapturePhotoSettings()
         
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         settings.flashMode = .auto
-//        if flashControlState == .off {
-//            settings.flashMode = .off
-//        } else {
-//            settings.flashMode = .on
-//        }
+
         
         cameraOutput.capturePhoto(with: settings, delegate: self)
     }
@@ -212,40 +207,43 @@ class CameraVC: UIViewController {
     func resultsMethod(request: VNRequest, error: Error?) {
         guard let results = request.results as? [VNClassificationObservation] else { return }
         
-        for classification in results {
-            if classification.confidence < 0.5 {
-                var unknownObjectMessage = "Not Sure, Please Try Again."
-                self.identificationLbl.text = unknownObjectMessage
-                self.confidenceLbl.text = "CONFIDENCE: --"
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.error)
-                if languageSelection == "en-US" {
-                    synthesizeSpeech(fromString: unknownObjectMessage)
-                    break
+        if (!self.isInternetAvailable)
+        {
+            for classification in results {
+                if classification.confidence < 0.5 {
+                    var unknownObjectMessage = "Not Sure, Please Try Again."
+                    self.identificationLbl.text = unknownObjectMessage
+                    self.confidenceLbl.text = "CONFIDENCE: --"
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.error)
+                    if languageSelection == "en-US" {
+                        synthesizeSpeech(fromString: unknownObjectMessage)
+                        break
+                    } else {
+                        unknownObjectMessage = "निश्चित नहीं है, कृपया पुनः प्रयास करें"
+                        synthesizeSpeech(fromString: unknownObjectMessage)
+                        break
+                    }
+                    
+                    
                 } else {
-                    unknownObjectMessage = "निश्चित नहीं है, कृपया पुनः प्रयास करें"
-                    synthesizeSpeech(fromString: unknownObjectMessage)
-                    break
+                    let identification = classification.identifier
+                    let confidence = Int(classification.confidence * 100)
+                    //                UNDO Later - Tenative
+                    //                self.identificationLbl.text = identification
+                    self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
+                    if languageSelection == "en-US" {
+                        let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
+                        //                UNDO Later - Tenative
+                        //                    synthesizeSpeech(fromString: completeSentence)
+                        break
+                    } else {
+                        let completeSentence = "ये है \(identification), \(confidence) प्रतिशत यकीन है"
+                        synthesizeSpeech(fromString: completeSentence)
+                        break
+                    }
+                    
                 }
-
-                
-            } else {
-                let identification = classification.identifier
-                let confidence = Int(classification.confidence * 100)
-//                UNDO Later - Tenative
-//                self.identificationLbl.text = identification
-                self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
-                if languageSelection == "en-US" {
-                    let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
-//                UNDO Later - Tenative
-//                    synthesizeSpeech(fromString: completeSentence)
-                    break
-                } else {
-                    let completeSentence = "ये है \(identification), \(confidence) प्रतिशत यकीन है"
-                    synthesizeSpeech(fromString: completeSentence)
-                    break
-                }
-
             }
         }
     }
