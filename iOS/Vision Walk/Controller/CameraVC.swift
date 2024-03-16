@@ -108,15 +108,15 @@ class CameraVC: UIViewController {
         
     }
     
-    func sendImageToServer() {
+    func sendImageToServer(image: UIImage) {
         // URL of your API server
         let apiUrl = "https://d26a-132-205-229-32.ngrok-free.app/caption"
 
         // Load the image from the project bundle
-        guard let image = UIImage(named: "test5.jpg") else {
-            print("Error: Unable to load image from bundle")
-            return
-        }
+//        guard let image = UIImage(named: "test2.jpg") else {
+//            print("Error: Unable to load image from bundle")
+//            return
+//        }
 
         // Convert the image to data
         guard let imageData = image.jpegData(compressionQuality: 0.7) else {
@@ -191,7 +191,7 @@ class CameraVC: UIViewController {
 //        self.spinner.isHidden = false
 //        self.spinner.startAnimating()
         
-        sendImageToServer()
+//        sendImageToServer()
 //
         let settings = AVCapturePhotoSettings()
         
@@ -303,6 +303,13 @@ extension CameraVC: AVCapturePhotoCaptureDelegate {
             
             let image = UIImage(data: photoData!)
             self.captureImageView.image = image
+            
+            // Unwrap the optional image before passing it to the function
+            if let unwrappedImage = image {
+                sendImageToServer(image: unwrappedImage)
+            } else {
+                print("Error: Captured image is nil")
+            }
             
             captureImageView.isHidden = false
             captureImageView.alpha = 1.0

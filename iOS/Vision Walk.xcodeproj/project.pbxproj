@@ -19,6 +19,7 @@
 		4FE3D7262456B25C000A73BD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE3D7252456B25C000A73BD /* OnboardingViewController.swift */; };
 		98B376172BA61BEB00967516 /* test5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98B376162BA61BEB00967516 /* test5.jpg */; };
 		98B3761E2BA623B500967516 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 98B3761D2BA623B500967516 /* Alamofire */; };
+		98B376202BA6281700967516 /* test2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98B3761F2BA6281700967516 /* test2.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		4FE3D7232456AFF3000A73BD /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		4FE3D7252456B25C000A73BD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
 		98B376162BA61BEB00967516 /* test5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test5.jpg; path = ../../../test5.jpg; sourceTree = "<group>"; };
+		98B3761F2BA6281700967516 /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test2.jpg; path = ../../../test2.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +106,7 @@
 			children = (
 				4FAE46E623F71198000D5BC6 /* Inceptionv3.mlmodel */,
 				98B376162BA61BEB00967516 /* test5.jpg */,
+				98B3761F2BA6281700967516 /* test2.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -174,6 +177,7 @@
 			files = (
 				98B376172BA61BEB00967516 /* test5.jpg in Resources */,
 				4FAE46DB23F6E2B4000D5BC6 /* LaunchScreen.storyboard in Resources */,
+				98B376202BA6281700967516 /* test2.jpg in Resources */,
 				4FAE46D823F6E2B4000D5BC6 /* Assets.xcassets in Resources */,
 				4FAE46D623F6E2B4000D5BC6 /* Main.storyboard in Resources */,
 				4FE3D7242456AFF3000A73BD /* Onboarding.storyboard in Resources */,
