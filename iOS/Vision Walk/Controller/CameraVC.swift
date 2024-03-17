@@ -1,15 +1,17 @@
 //
-//  ViewController.swift
+//  CameraVC.swift
 //  Vision Walk
 //
-//  Created by Shashank Verma on 14/02/20.
-//  Copyright © 2020 Shashank Verma. All rights reserved.
+//  Created by Shashank Verma on 10/02/24.
+//  Copyright © 2024 Shashank Verma. All rights reserved.
 //
 
 import UIKit
 import AVFoundation
 import CoreML
 import Vision
+
+import Alamofire // Network request handler
 
 enum FlashState {
     case off
@@ -30,6 +32,7 @@ class CameraVC: UIViewController {
     var reachability: Reachability?
     var languageSelection: String = "en-US"
     var languageChangedString: String = ""
+    var isInternetAvailable: Bool = true
 
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var captureImageView: UIImageView!
@@ -50,11 +53,13 @@ class CameraVC: UIViewController {
         reachability?.whenReachable = { _ in
             DispatchQueue.main.async {
                 self.internetLbl.text! = "Internet Available"
+                self.isInternetAvailable = true
             }
         }
         reachability?.whenUnreachable = { _ in
             DispatchQueue.main.async {
                 self.internetLbl.text! = "Internet Not Available"
+                self.isInternetAvailable = false
             }
         }
         
@@ -106,6 +111,47 @@ class CameraVC: UIViewController {
         
     }
     
+    func sendImageToServer(image: UIImage) {
+        // URL of your API server
+        let apiUrl = "https://d26a-132-205-229-32.ngrok-free.app/caption"
+
+        // Load the image from the project bundle
+//        guard let image = UIImage(named: "test2.jpg") else {
+//            print("Error: Unable to load image from bundle")
+//            return
+//        }
+
+        // Convert the image to data
+        guard let imageData = image.jpegData(compressionQuality: 0.7) else {
+            print("Error: Unable to convert image to data")
+            return
+        }
+
+        // Send the image data as multipart form data using Alamofire
+        AF.upload(multipartFormData: { multipartFormData in
+            multipartFormData.append(imageData, withName: "image", fileName: "image.jpg", mimeType: "image/jpeg")
+        }, to: apiUrl).responseJSON { response in
+            switch response.result {
+            case .success(let value):
+                // Handle success response
+                if let jsonResponse = value as? [String: Any] {
+                    if let caption = jsonResponse["caption"] as? String {
+//                        print("Caption: \(caption)")
+                        print("\(caption)")
+                        self.identificationLbl.text = "\(caption)"
+                        self.synthesizeSpeech(fromString: caption)
+                        self.confidenceLbl.text = "Our model is in beta and make mistakes."
+                    } else if let error = jsonResponse["error"] as? String {
+                        print("Server Error: \(error)")
+                    }
+                }
+            case .failure(let error):
+                // Handle failure response
+                print("Error: \(error)")
+            }
+        }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         previewLayer.frame = cameraView.bounds
@@ -148,19 +194,12 @@ class CameraVC: UIViewController {
     }
     
     @objc func didTapCameraView() {
-//        self.cameraView.isUserInteractionEnabled = false
-//        self.spinner.isHidden = false
-//        self.spinner.startAnimating()
-//
+
         let settings = AVCapturePhotoSettings()
         
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         settings.flashMode = .auto
-//        if flashControlState == .off {
-//            settings.flashMode = .off
-//        } else {
-//            settings.flashMode = .on
-//        }
+
         
         cameraOutput.capturePhoto(with: settings, delegate: self)
     }
@@ -168,42 +207,41 @@ class CameraVC: UIViewController {
     func resultsMethod(request: VNRequest, error: Error?) {
         guard let results = request.results as? [VNClassificationObservation] else { return }
         
-        for classification in results {
-            if classification.confidence < 0.5 {
-                var unknownObjectMessage = "Not Sure, Please Try Again."
-                self.identificationLbl.text = unknownObjectMessage
-                self.confidenceLbl.text = "CONFIDENCE: --"
-                let generator = UINotificationFeedbackGenerator()
-                generator.notificationOccurred(.error)
-                if languageSelection == "en-US" {
-                    synthesizeSpeech(fromString: unknownObjectMessage)
-                    break
+        if (!self.isInternetAvailable)
+        {
+            for classification in results {
+                if classification.confidence < 0.5 {
+                    var unknownObjectMessage = "Not Sure, Please Try Again."
+                    self.identificationLbl.text = unknownObjectMessage
+                    self.confidenceLbl.text = "CONFIDENCE: --"
+                    let generator = UINotificationFeedbackGenerator()
+                    generator.notificationOccurred(.error)
+                    if languageSelection == "en-US" {
+                        synthesizeSpeech(fromString: unknownObjectMessage)
+                        break
+                    } else {
+                        unknownObjectMessage = "निश्चित नहीं है, कृपया पुनः प्रयास करें"
+                        synthesizeSpeech(fromString: unknownObjectMessage)
+                        break
+                    }
+                    
+                    
                 } else {
-                    unknownObjectMessage = "निश्चित नहीं है, कृपया पुनः प्रयास करें"
-                    synthesizeSpeech(fromString: unknownObjectMessage)
-                    break
+                    let identification = classification.identifier
+                    let confidence = Int(classification.confidence * 100)
+                                    self.identificationLbl.text = identification
+                    self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
+                    if languageSelection == "en-US" {
+                        let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
+                                            synthesizeSpeech(fromString: completeSentence)
+                        break
+                    } else {
+                        let completeSentence = "ये है \(identification), \(confidence) प्रतिशत यकीन है"
+                        synthesizeSpeech(fromString: completeSentence)
+                        break
+                    }
+                    
                 }
-//
-//                synthesizeSpeech(fromString: unknownObjectMessage)
-//                self.confidenceLbl.text = ""
-//                break
-            } else {
-                let identification = classification.identifier
-                let confidence = Int(classification.confidence * 100)
-                self.identificationLbl.text = identification
-                self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
-                if languageSelection == "en-US" {
-                    let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
-                    synthesizeSpeech(fromString: completeSentence)
-                    break
-                } else {
-                    let completeSentence = "ये है \(identification), \(confidence) प्रतिशत यकीन है"
-                    synthesizeSpeech(fromString: completeSentence)
-                    break
-                }
-//                let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
-//                synthesizeSpeech(fromString: completeSentence)
-//                break
             }
         }
     }
@@ -251,18 +289,31 @@ extension CameraVC: AVCapturePhotoCaptureDelegate {
         } else {
             photoData = photo.fileDataRepresentation()
             
-            do {
-                let model = try VNCoreMLModel(for: Inceptionv3().model)
-                let request = VNCoreMLRequest(model: model, completionHandler: resultsMethod)
-                let handler = VNImageRequestHandler(data: photoData!)
-                try handler.perform([request])
-            } catch {
-                debugPrint(error)
-            }
-            
             let image = UIImage(data: photoData!)
             self.captureImageView.image = image
             
+            
+            if(self.isInternetAvailable)
+            {
+                // Unwrap the optional image before passing it to the function
+                if let unwrappedImage = image {
+                    sendImageToServer(image: unwrappedImage)
+                } else {
+                    print("Error: Captured image is nil")
+                }
+            }
+            else {
+                do {
+                    let model = try VNCoreMLModel(for: Inceptionv3().model)
+                    let request = VNCoreMLRequest(model: model, completionHandler: resultsMethod)
+                    let handler = VNImageRequestHandler(data: photoData!)
+                    try handler.perform([request])
+                } catch {
+                    debugPrint(error)
+                }
+            }
+            
+
             captureImageView.isHidden = false
             captureImageView.alpha = 1.0
             
