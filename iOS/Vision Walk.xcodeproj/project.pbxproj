@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 55;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,12 +17,14 @@
 		4FAE46E723F71198000D5BC6 /* Inceptionv3.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 4FAE46E623F71198000D5BC6 /* Inceptionv3.mlmodel */; };
 		4FE3D7242456AFF3000A73BD /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4FE3D7232456AFF3000A73BD /* Onboarding.storyboard */; };
 		4FE3D7262456B25C000A73BD /* OnboardingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE3D7252456B25C000A73BD /* OnboardingViewController.swift */; };
+		6852EE3E41403498C32C68DA /* Pods_Vision_Walk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C3A5B038036A18DA2355E86B /* Pods_Vision_Walk.framework */; };
 		98B376172BA61BEB00967516 /* test5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98B376162BA61BEB00967516 /* test5.jpg */; };
 		98B3761E2BA623B500967516 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 98B3761D2BA623B500967516 /* Alamofire */; };
 		98B376202BA6281700967516 /* test2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98B3761F2BA6281700967516 /* test2.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3949BBAD8B663E5948D752D2 /* Pods-Vision Walk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vision Walk.debug.xcconfig"; path = "Target Support Files/Pods-Vision Walk/Pods-Vision Walk.debug.xcconfig"; sourceTree = "<group>"; };
 		4F9D29A023F95C9A00AB3C6A /* Reachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reachability.swift; sourceTree = "<group>"; };
 		4FAE46CB23F6E2B4000D5BC6 /* Vision Walk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Vision Walk.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FAE46CE23F6E2B4000D5BC6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -35,8 +37,10 @@
 		4FAE46E623F71198000D5BC6 /* Inceptionv3.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = Inceptionv3.mlmodel; sourceTree = "<group>"; };
 		4FE3D7232456AFF3000A73BD /* Onboarding.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		4FE3D7252456B25C000A73BD /* OnboardingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingViewController.swift; sourceTree = "<group>"; };
+		7FE0EC8A38592E37634BA491 /* Pods-Vision Walk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vision Walk.release.xcconfig"; path = "Target Support Files/Pods-Vision Walk/Pods-Vision Walk.release.xcconfig"; sourceTree = "<group>"; };
 		98B376162BA61BEB00967516 /* test5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test5.jpg; path = ../../../test5.jpg; sourceTree = "<group>"; };
 		98B3761F2BA6281700967516 /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test2.jpg; path = ../../../test2.jpg; sourceTree = "<group>"; };
+		C3A5B038036A18DA2355E86B /* Pods_Vision_Walk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vision_Walk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +49,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				98B3761E2BA623B500967516 /* Alamofire in Frameworks */,
+				6852EE3E41403498C32C68DA /* Pods_Vision_Walk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -56,6 +61,8 @@
 			children = (
 				4FAE46CD23F6E2B4000D5BC6 /* Vision Walk */,
 				4FAE46CC23F6E2B4000D5BC6 /* Products */,
+				BF11D2CBE63C089DBBABAD1F /* Pods */,
+				609EC9FDA0C433238C1BCA03 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -111,6 +118,23 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
+		609EC9FDA0C433238C1BCA03 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C3A5B038036A18DA2355E86B /* Pods_Vision_Walk.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BF11D2CBE63C089DBBABAD1F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				3949BBAD8B663E5948D752D2 /* Pods-Vision Walk.debug.xcconfig */,
+				7FE0EC8A38592E37634BA491 /* Pods-Vision Walk.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -118,9 +142,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 4FAE46DF23F6E2B4000D5BC6 /* Build configuration list for PBXNativeTarget "Vision Walk" */;
 			buildPhases = (
+				9F2969C8D1B16AF9E952A396 /* [CP] Check Pods Manifest.lock */,
 				4FAE46C723F6E2B4000D5BC6 /* Sources */,
 				4FAE46C823F6E2B4000D5BC6 /* Frameworks */,
 				4FAE46C923F6E2B4000D5BC6 /* Resources */,
+				6694E7B6CFD31F101C45BFFB /* [CP] Embed Pods Frameworks */,
+				6B2236CFFB08C6CE41B706C3 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -150,7 +177,7 @@
 				};
 			};
 			buildConfigurationList = 4FAE46C623F6E2B4000D5BC6 /* Build configuration list for PBXProject "Vision Walk" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 13.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -185,6 +212,65 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6694E7B6CFD31F101C45BFFB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vision Walk/Pods-Vision Walk-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vision Walk/Pods-Vision Walk-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Vision Walk/Pods-Vision Walk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		6B2236CFFB08C6CE41B706C3 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vision Walk/Pods-Vision Walk-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Vision Walk/Pods-Vision Walk-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Vision Walk/Pods-Vision Walk-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9F2969C8D1B16AF9E952A396 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Vision Walk-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		4FAE46C723F6E2B4000D5BC6 /* Sources */ = {
@@ -272,7 +358,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -326,7 +412,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 13.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -338,6 +424,7 @@
 		};
 		4FAE46E023F6E2B4000D5BC6 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3949BBAD8B663E5948D752D2 /* Pods-Vision Walk.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -347,7 +434,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shashank.Vision-Walk";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shashankverma.Vision-Walk";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -356,6 +443,7 @@
 		};
 		4FAE46E123F6E2B4000D5BC6 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7FE0EC8A38592E37634BA491 /* Pods-Vision Walk.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
@@ -365,7 +453,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "com.shashank.Vision-Walk";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.shashankverma.Vision-Walk";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

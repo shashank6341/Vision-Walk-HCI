@@ -12,6 +12,7 @@ import CoreML
 import Vision
 
 import Alamofire // Network request handler
+import MLKitTranslate
 
 enum FlashState {
     case off
@@ -31,8 +32,11 @@ class CameraVC: UIViewController {
     var speechSynthesizer = AVSpeechSynthesizer()
     var reachability: Reachability?
     var languageSelection: String = "en-US"
+    var translationLanguage: String = "en-US"
     var languageChangedString: String = ""
     var isInternetAvailable: Bool = true
+    var englishFrenchTranslator: Translator!
+    
 
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var captureImageView: UIImageView!
@@ -70,6 +74,28 @@ class CameraVC: UIViewController {
             print("Couldn't Start Notifier")
         }
         
+        setupTranslate()
+        
+    }
+    
+    func setupTranslate() {
+        let options = TranslatorOptions(sourceLanguage: .english, targetLanguage: .french)
+        self.englishFrenchTranslator = Translator.translator(options: options)
+        
+        let conditions = ModelDownloadConditions(
+            allowsCellularAccess: false,
+            allowsBackgroundDownloading: true
+        )
+        
+        self.englishFrenchTranslator.downloadModelIfNeeded(with: conditions) { error in
+            guard error == nil else {
+                print("Error downloading translation model")
+                return
+            }
+            
+            print("Translation model downloaded successfully")
+            // Model downloaded successfully. Okay to start translating.
+        }
     }
     
     @objc func internetChanged(note: Notification){
@@ -138,9 +164,27 @@ class CameraVC: UIViewController {
                     if let caption = jsonResponse["caption"] as? String {
 //                        print("Caption: \(caption)")
                         print("\(caption)")
-                        self.identificationLbl.text = "\(caption)"
-                        self.synthesizeSpeech(fromString: caption)
-                        self.confidenceLbl.text = "Our model is in beta and make mistakes."
+                        
+                        
+                        if(self.translationLanguage == "en-US") {
+                            
+                            self.identificationLbl.text = "\(caption)"
+                            self.synthesizeSpeech(fromString: caption)
+                        }
+                        else {
+                            print("Inside French language")
+                            self.englishFrenchTranslator.translate(caption) { translatedText, error in
+                                guard error == nil, let translatedText = translatedText else { return }
+
+                                // Translation succeeded.
+                                self.identificationLbl.text = translatedText
+                                self.synthesizeSpeech(fromString: translatedText)
+                            }
+                        }
+
+                        
+
+                        self.confidenceLbl.text = "Our model is in beta and can make mistakes."
                     } else if let error = jsonResponse["error"] as? String {
                         print("Server Error: \(error)")
                     }
@@ -250,7 +294,8 @@ class CameraVC: UIViewController {
         let speechUtterance = AVSpeechUtterance(string: string)
 //        let speechUtterance = AVSpeechUtterance(string: "Pineapple 100% sure")
 //        speechUtterance.voice = AVSpeechSynthesisVoice(language: "hi-IN")
-        speechUtterance.voice = AVSpeechSynthesisVoice(language: languageSelection)
+        print(translationLanguage)
+        speechUtterance.voice = AVSpeechSynthesisVoice(language: translationLanguage)
         speechSynthesizer.speak(speechUtterance)
     }
     
@@ -277,6 +322,24 @@ class CameraVC: UIViewController {
             langBtn.setTitle("Language: English", for: .normal)
             languageChangedString = "Language Changed to English"
             synthesizeSpeech(fromString: languageChangedString)
+        }
+    }
+    
+    override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+        if event?.subtype == UIEvent.EventSubtype.motionShake{
+            if self.translationLanguage == "en-US" {
+                
+                self.translationLanguage = "fr-FR"
+                
+                languageChangedString = "Langue changée en français"
+                synthesizeSpeech(fromString: languageChangedString)
+            }
+            else {
+                self.translationLanguage = "en-US"
+                
+                languageChangedString = "Language changed to english"
+                synthesizeSpeech(fromString: languageChangedString)
+            }
         }
     }
     
