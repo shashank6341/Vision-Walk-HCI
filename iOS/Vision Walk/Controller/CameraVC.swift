@@ -76,6 +76,37 @@ class CameraVC: UIViewController {
         
         setupTranslate()
         
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = roundedLblView.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
+
+        gradientLayer.colors = [
+          UIColor.clear.cgColor,  // Transparent start color
+          UIColor(white: 0.9, alpha: 0.3).cgColor // Light gray with some opacity
+        ]
+        gradientLayer.locations = [0.0, 1.0]  // Color distribution
+
+        // Add a slight blur effect (optional)
+        let blurEffect = UIBlurEffect(style: .regular)
+        let blurView = UIVisualEffectView(effect: blurEffect)
+        
+
+        // Add blurView with adjusted frame
+        let blurFrame = roundedLblView.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
+        blurView.frame = blurFrame
+        
+        blurView.layer.cornerRadius = 10.0
+
+
+        roundedLblView.insertSubview(blurView, at: 0)
+
+        // Add the gradient layer on top
+        roundedLblView.layer.insertSublayer(gradientLayer, at: 1)
+
+        // Optional: Set rounded corners
+        roundedLblView.layer.cornerRadius = 10.0  // Adjust corner radius as needed
+        
+
+        
     }
     
     func setupTranslate() {
