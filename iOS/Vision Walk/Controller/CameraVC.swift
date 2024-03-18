@@ -36,8 +36,10 @@ class CameraVC: UIViewController {
     var languageChangedString: String = ""
     var isInternetAvailable: Bool = true
     var englishFrenchTranslator: Translator!
+    var autoClickingEnabled = false
+    var autoClickTimer: Timer?
+    let autoClickInterval: TimeInterval = 5.0
     
-
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var captureImageView: UIImageView!
     @IBOutlet weak var flashBtn: UIButton!
@@ -236,8 +238,8 @@ class CameraVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
-        tap.numberOfTapsRequired = 1
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
+//        tap.numberOfTapsRequired = 1
         
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
@@ -260,7 +262,10 @@ class CameraVC: UIViewController {
                 previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 
                 cameraView.layer.addSublayer(previewLayer!)
-                cameraView.addGestureRecognizer(tap)
+//                cameraView.addGestureRecognizer(tap)
+                autoClickingEnabled = true
+                didTapCameraView()
+                autoClickTimer = Timer.scheduledTimer(timeInterval: autoClickInterval, target: self, selector: #selector(autoClickTimerFired), userInfo: nil, repeats: true)
                 captureSession.startRunning()
             }
         } catch {
@@ -373,6 +378,9 @@ class CameraVC: UIViewController {
             }
         }
     }
+    @objc func autoClickTimerFired() {
+            didTapCameraView()
+        }
     
 }
 
