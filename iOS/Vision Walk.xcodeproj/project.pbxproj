@@ -21,6 +21,7 @@
 		98B376172BA61BEB00967516 /* test5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98B376162BA61BEB00967516 /* test5.jpg */; };
 		98B3761E2BA623B500967516 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 98B3761D2BA623B500967516 /* Alamofire */; };
 		98B376202BA6281700967516 /* test2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 98B3761F2BA6281700967516 /* test2.jpg */; };
+		98B3BC812BA8ECD00029A9A3 /* 1024.png in Resources */ = {isa = PBXBuildFile; fileRef = 98B3BC802BA8ECD00029A9A3 /* 1024.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		7FE0EC8A38592E37634BA491 /* Pods-Vision Walk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Vision Walk.release.xcconfig"; path = "Target Support Files/Pods-Vision Walk/Pods-Vision Walk.release.xcconfig"; sourceTree = "<group>"; };
 		98B376162BA61BEB00967516 /* test5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test5.jpg; path = ../../../test5.jpg; sourceTree = "<group>"; };
 		98B3761F2BA6281700967516 /* test2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = test2.jpg; path = ../../../test2.jpg; sourceTree = "<group>"; };
+		98B3BC802BA8ECD00029A9A3 /* 1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1024.png; sourceTree = "<group>"; };
 		C3A5B038036A18DA2355E86B /* Pods_Vision_Walk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Vision_Walk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -114,6 +116,7 @@
 				4FAE46E623F71198000D5BC6 /* Inceptionv3.mlmodel */,
 				98B376162BA61BEB00967516 /* test5.jpg */,
 				98B3761F2BA6281700967516 /* test2.jpg */,
+				98B3BC802BA8ECD00029A9A3 /* 1024.png */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				98B376172BA61BEB00967516 /* test5.jpg in Resources */,
 				4FAE46DB23F6E2B4000D5BC6 /* LaunchScreen.storyboard in Resources */,
 				98B376202BA6281700967516 /* test2.jpg in Resources */,
+				98B3BC812BA8ECD00029A9A3 /* 1024.png in Resources */,
 				4FAE46D823F6E2B4000D5BC6 /* Assets.xcassets in Resources */,
 				4FAE46D623F6E2B4000D5BC6 /* Main.storyboard in Resources */,
 				4FE3D7242456AFF3000A73BD /* Onboarding.storyboard in Resources */,
