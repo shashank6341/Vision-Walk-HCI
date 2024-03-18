@@ -36,6 +36,9 @@ class CameraVC: UIViewController {
     var languageChangedString: String = ""
     var isInternetAvailable: Bool = true
     var englishFrenchTranslator: Translator!
+    var autoClickTimer: Timer?
+    var autoClickingEnabled = false
+    let autoClickInterval: TimeInterval = 15.0
     
 
     @IBOutlet weak var cameraView: UIView!
@@ -269,6 +272,17 @@ class CameraVC: UIViewController {
     }
     
     @objc func didTapCameraView() {
+        if autoClickingEnabled {
+                autoClickTimer?.invalidate()
+                autoClickTimer = nil
+                autoClickingEnabled = false
+            } else {
+                autoClickingEnabled = true
+                autoClickTimer = Timer.scheduledTimer(timeInterval: autoClickInterval, target: self, selector: #selector(autoClickTimerFired), userInfo: nil, repeats: true)
+                
+                
+                capturePhoto()
+            }
 
         let settings = AVCapturePhotoSettings()
         
@@ -373,6 +387,16 @@ class CameraVC: UIViewController {
             }
         }
     }
+    func capturePhoto() {
+        let settings = AVCapturePhotoSettings()
+        settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
+        settings.flashMode = .auto
+        cameraOutput.capturePhoto(with: settings, delegate: self)
+    }
+    @objc func autoClickTimerFired() {
+        capturePhoto()
+    }
+    
     
 }
 
