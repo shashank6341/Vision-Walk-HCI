@@ -227,6 +227,57 @@ class CameraVC: UIViewController {
         }
     }
     
+    // Blip Inference Server
+    func sendImageToInferenceServer(image: UIImage) {
+        print("Inside Send image function")
+        
+        guard let data = image.jpegData(compressionQuality: 0.7) else {
+            print("Error: Unable to convert image to data")
+            return
+        }
+        
+        let url = "https://api-inference.huggingface.co/models/Salesforce/blip-image-captioning-large"
+        let headers: HTTPHeaders = ["Authorization": "Bearer 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"]
+        
+        AF.upload(data, to: url, method: .post, headers: headers)
+        //            .validate(statusCode: 200..<300)
+            .responseJSON { response in
+                switch response.result {
+                case .success(let value):
+                    //                    print("\(value)")
+                    if let jsonArray = value as? [[String: Any]], let firstObject = jsonArray.first, let generatedText = firstObject["generated_text"] as? String {
+                        print("Generated Text: \(generatedText)")
+                        if(self.translationLanguage == "en-US") {
+                            
+                            self.identificationLbl.text = "\(generatedText)"
+                            self.synthesizeSpeech(fromString: generatedText)
+                        }
+                        else {
+                            print("Inside French language")
+                            self.englishFrenchTranslator.translate(generatedText) { translatedText, error in
+                                guard error == nil, let translatedText = translatedText else { return }
+                                
+                                // Translation succeeded.
+                                self.identificationLbl.text = translatedText
+                                self.synthesizeSpeech(fromString: translatedText)
+                            }
+                        }
+                        self.confidenceLbl.text = "Our system is in beta and can make mistakes."
+                    } else {
+                        print("Error: Unable to extract generated text from response")
+                    }
+                case .failure(let error):
+                    if let statusCode = response.response?.statusCode, statusCode == 503 {
+                        print("Service temporarily unavailable. Please try again later.")
+                        self.synthesizeSpeech(fromString: "Service temporarily unavailable. Please try again later.")
+                    } else {
+                        print("Error: \(error)")
+                    }
+                }
+                
+            }
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         previewLayer.frame = cameraView.bounds
