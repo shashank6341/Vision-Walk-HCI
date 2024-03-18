@@ -225,7 +225,7 @@ class CameraVC: UIViewController {
                 captureSession.addOutput(cameraOutput!)
                 
                 previewLayer = AVCaptureVideoPreviewLayer(session: captureSession!)
-                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspect
+                previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
                 previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 
                 cameraView.layer.addSublayer(previewLayer!)
