@@ -28,16 +28,16 @@
                                         <rect key="frame" x="8" y="8" width="358" height="104"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="The name of the items captured will appear here" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="10" translatesAutoresizingMaskIntoConstraints="NO" id="Plu-yZ-pt2">
-                                                <rect key="frame" x="0.0" y="0.0" width="358" height="80.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="358" height="48"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
-                                                <color key="textColor" systemColor="darkTextColor"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="CONFIDENCE:" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KBG-4I-b7c">
-                                                <rect key="frame" x="0.0" y="88.5" width="358" height="15.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KBG-4I-b7c">
+                                                <rect key="frame" x="0.0" y="56" width="358" height="48"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="13"/>
-                                                <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
@@ -60,21 +60,6 @@
                                     <constraint firstAttribute="height" constant="168" id="VYu-zW-iNS"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvs-Dd-aQj">
-                                <rect key="frame" x="20" y="752" width="220" height="90"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="VQM-AJ-ZQ1"/>
-                                    <constraint firstAttribute="width" constant="220" id="xH6-SY-44w"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-DemiBold" family="Avenir Next" pointSize="20"/>
-                                <state key="normal" title="Language: English">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="langBtnWasPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="bfY-eE-Jg7"/>
-                                </connections>
-                            </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="stw-WG-L0W">
                                 <rect key="frame" x="20" y="198" width="374" height="40"/>
                                 <subviews>
@@ -107,12 +92,10 @@
                             <constraint firstItem="q6p-Wy-qgu" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" symbolic="YES" id="KpO-yV-2kX"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="P85-w6-MXK" secondAttribute="trailing" constant="8" id="Trv-Kq-TYT"/>
                             <constraint firstItem="P85-w6-MXK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="WtT-Bh-gW2"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="Kvs-Dd-aQj" secondAttribute="bottom" constant="20" id="Yzq-dm-q5i"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="WBi-lL-Fa1" secondAttribute="bottom" constant="20" id="fAq-8R-t2c"/>
                             <constraint firstItem="stw-WG-L0W" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="k14-4I-DPt"/>
                             <constraint firstItem="P85-w6-MXK" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="lFf-m0-kVm"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="WBi-lL-Fa1" secondAttribute="trailing" constant="20" id="thw-d5-Ks2"/>
-                            <constraint firstItem="Kvs-Dd-aQj" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="wH2-x5-tjT"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="stw-WG-L0W" secondAttribute="trailing" constant="20" id="ylO-PK-flS"/>
                             <constraint firstItem="P85-w6-MXK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ze4-Vd-Waf"/>
                         </constraints>
@@ -124,7 +107,6 @@
                         <outlet property="identificationLbl" destination="Plu-yZ-pt2" id="qcw-v6-jiD"/>
                         <outlet property="internetLbl" destination="w5n-OK-S6o" id="xVF-oX-WXt"/>
                         <outlet property="internetView" destination="stw-WG-L0W" id="Aq0-1S-Rha"/>
-                        <outlet property="langBtn" destination="Kvs-Dd-aQj" id="H1U-Zs-ODC"/>
                         <outlet property="roundedLblView" destination="P85-w6-MXK" id="OvJ-yq-afC"/>
                     </connections>
                 </viewController>
@@ -134,9 +116,6 @@
         </scene>
     </scenes>
     <resources>
-        <systemColor name="darkTextColor">
-            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
         <systemColor name="systemGreenColor">
             <color red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
