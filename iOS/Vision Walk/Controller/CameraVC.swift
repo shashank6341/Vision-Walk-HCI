@@ -179,7 +179,8 @@ class CameraVC: UIViewController {
     
     func sendImageToServer(image: UIImage) {
         // URL of your API server
-        let apiUrl = "https://d26a-132-205-229-32.ngrok-free.app/caption"
+//        let apiUrl = "https://d26a-132-205-229-32.ngrok-free.app/caption"
+        let apiUrl = "https://5f67-216-208-81-31.ngrok-free.app/caption"
         
         // Load the image from the project bundle
         //        guard let image = UIImage(named: "test2.jpg") else {
@@ -195,7 +196,7 @@ class CameraVC: UIViewController {
         
         // Send the image data as multipart form data using Alamofire
         AF.upload(multipartFormData: { multipartFormData in
-            multipartFormData.append(imageData, withName: "image", fileName: "image.jpg", mimeType: "image/jpeg")
+            multipartFormData.append(imageData, withName: "image", fileName: "image.jpeg", mimeType: "image/jpeg")
         }, to: apiUrl).responseJSON { response in
             switch response.result {
             case .success(let value):
@@ -278,7 +279,8 @@ class CameraVC: UIViewController {
                 case .failure(let error):
                     if let statusCode = response.response?.statusCode, statusCode == 503 {
                         print("Service temporarily unavailable. Please try again later.")
-                        self.synthesizeSpeech(fromString: "Service temporarily unavailable. Please try again later.")
+                        self.synthesizeSpeech(fromString: "Service unavailable. Please try again later.")
+                        self.playHapticFeedback()
                     } else {
                         print("Error: \(error)")
                     }
@@ -500,6 +502,7 @@ extension CameraVC: AVCapturePhotoCaptureDelegate {
                 // Unwrap the optional image before passing it to the function
                 if let unwrappedImage = image {
                     sendImageToServer(image: unwrappedImage)
+//                    sendImageToInferenceServer(image: unwrappedImage)
                 } else {
                     print("Error: Captured image is nil")
                 }
