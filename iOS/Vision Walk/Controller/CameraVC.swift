@@ -35,6 +35,7 @@ class CameraVC: UIViewController {
     var translationLanguage: String = "en-US"
     var languageChangedString: String = ""
     var isInternetAvailable: Bool = true
+    var isInitialLaunch: Bool = true
     
     var englishFrenchTranslator: Translator!
     var captureTimer: Timer?
@@ -79,35 +80,42 @@ class CameraVC: UIViewController {
         
         let gradientLayer = CAGradientLayer()
         gradientLayer.frame = roundedLblView.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
-
+        
         gradientLayer.colors = [
-          UIColor.clear.cgColor,  // Transparent start color
-          UIColor(white: 0.9, alpha: 0.3).cgColor // Light gray with some opacity
+            UIColor.clear.cgColor,  // Transparent start color
+            UIColor(white: 0.9, alpha: 0.3).cgColor // Light gray with some opacity
         ]
         gradientLayer.locations = [0.0, 1.0]  // Color distribution
-
+        
         // Add a slight blur effect (optional)
         let blurEffect = UIBlurEffect(style: .regular)
         let blurView = UIVisualEffectView(effect: blurEffect)
         
-
+        
         // Add blurView with adjusted frame
         let blurFrame = roundedLblView.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
         blurView.frame = blurFrame
         
         blurView.layer.cornerRadius = 10.0
-
-
+        
+        
         roundedLblView.insertSubview(blurView, at: 0)
-
+        
         // Add the gradient layer on top
         roundedLblView.layer.insertSublayer(gradientLayer, at: 1)
-
+        
         // Optional: Set rounded corners
         roundedLblView.layer.cornerRadius = 10.0  // Adjust corner radius as needed
         
-
-        
+        // Notification for application openings.
+        let notificationCenter = NotificationCenter.default
+        notificationCenter.addObserver(self, selector: #selector(appMovedToForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    @objc func appMovedToForeground() {
+        let message = isInitialLaunch ? "Vision Walked app opened" : "Vision Walked app opened again"
+        synthesizeSpeech(fromString: message)
+        playHapticFeedback()
+        isInitialLaunch = false
     }
     
     func setupTranslate() {
@@ -137,54 +145,54 @@ class CameraVC: UIViewController {
                 self.internetLbl.text! = "Internet Available"
                 self.internetView.backgroundColor = .green
                 self.internetViewVisibility()
-                
             }
         }else{
             DispatchQueue.main.async {
                 self.internetLbl.text! = "Internet Not Available"
                 self.internetView.backgroundColor = .red
-                self.internetViewVisibility()
-            }
+                self.internetViewVisibility()            }
         }
+        self.synthesizeSpeech(fromString: self.internetLbl.text!)
+        playHapticFeedback()
     }
     
     func internetViewVisibility(){
-     UIView.animate(withDuration: 0.5, delay: 2.0, options: [], animations: {
-         
-         self.internetView.alpha = 1.0
-         
-     }) { (finished: Bool) in
-         
-         self.internetView.isHidden = false
-     }
-     
-     UIView.animate(withDuration: 0.5, delay: 2.0, options: [], animations: {
-         
-         self.internetView.alpha = 0.0
-         
-     }) { (finished: Bool) in
-         
-         self.internetView.isHidden = true
-     }
+        UIView.animate(withDuration: 0.5, delay: 2.0, options: [], animations: {
+            
+            self.internetView.alpha = 1.0
+            
+        }) { (finished: Bool) in
+            
+            self.internetView.isHidden = false
+        }
+        
+        UIView.animate(withDuration: 0.5, delay: 2.0, options: [], animations: {
+            
+            self.internetView.alpha = 0.0
+            
+        }) { (finished: Bool) in
+            
+            self.internetView.isHidden = true
+        }
         
     }
     
     func sendImageToServer(image: UIImage) {
         // URL of your API server
         let apiUrl = "https://d26a-132-205-229-32.ngrok-free.app/caption"
-
+        
         // Load the image from the project bundle
-//        guard let image = UIImage(named: "test2.jpg") else {
-//            print("Error: Unable to load image from bundle")
-//            return
-//        }
-
+        //        guard let image = UIImage(named: "test2.jpg") else {
+        //            print("Error: Unable to load image from bundle")
+        //            return
+        //        }
+        
         // Convert the image to data
         guard let imageData = image.jpegData(compressionQuality: 0.7) else {
             print("Error: Unable to convert image to data")
             return
         }
-
+        
         // Send the image data as multipart form data using Alamofire
         AF.upload(multipartFormData: { multipartFormData in
             multipartFormData.append(imageData, withName: "image", fileName: "image.jpg", mimeType: "image/jpeg")
@@ -194,7 +202,7 @@ class CameraVC: UIViewController {
                 // Handle success response
                 if let jsonResponse = value as? [String: Any] {
                     if let caption = jsonResponse["caption"] as? String {
-//                        print("Caption: \(caption)")
+                        //                        print("Caption: \(caption)")
                         print("\(caption)")
                         
                         
@@ -207,15 +215,15 @@ class CameraVC: UIViewController {
                             print("Inside French language")
                             self.englishFrenchTranslator.translate(caption) { translatedText, error in
                                 guard error == nil, let translatedText = translatedText else { return }
-
+                                
                                 // Translation succeeded.
                                 self.identificationLbl.text = translatedText
                                 self.synthesizeSpeech(fromString: translatedText)
                             }
                         }
-
                         
-
+                        
+                        
                         self.confidenceLbl.text = "Our model is in beta and can make mistakes."
                     } else if let error = jsonResponse["error"] as? String {
                         print("Server Error: \(error)")
@@ -327,8 +335,8 @@ class CameraVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
-//        tap.numberOfTapsRequired = 1
+        //        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
+        //        tap.numberOfTapsRequired = 1
         
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
@@ -351,7 +359,7 @@ class CameraVC: UIViewController {
                 previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 
                 cameraView.layer.addSublayer(previewLayer!)
-//                cameraView.addGestureRecognizer(tap)
+                //                cameraView.addGestureRecognizer(tap)
                 captureSession.startRunning()
             }
         } catch {
@@ -360,7 +368,7 @@ class CameraVC: UIViewController {
     }
     
     @objc func didTapCameraView() {
-
+        
         let settings = AVCapturePhotoSettings()
         
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
@@ -395,11 +403,11 @@ class CameraVC: UIViewController {
                 } else {
                     let identification = classification.identifier
                     let confidence = Int(classification.confidence * 100)
-                                    self.identificationLbl.text = identification
+                    self.identificationLbl.text = identification
                     self.confidenceLbl.text = "CONFIDENCE: \(confidence)%"
                     if languageSelection == "en-US" {
                         let completeSentence = "Looks like a \(identification), \(confidence)% Sure"
-                                            synthesizeSpeech(fromString: completeSentence)
+                        synthesizeSpeech(fromString: completeSentence)
                         break
                     } else {
                         let completeSentence = "ये है \(identification), \(confidence) प्रतिशत यकीन है"
@@ -414,8 +422,8 @@ class CameraVC: UIViewController {
     
     func synthesizeSpeech(fromString string: String) {
         let speechUtterance = AVSpeechUtterance(string: string)
-//        let speechUtterance = AVSpeechUtterance(string: "Pineapple 100% sure")
-//        speechUtterance.voice = AVSpeechSynthesisVoice(language: "hi-IN")
+        //        let speechUtterance = AVSpeechUtterance(string: "Pineapple 100% sure")
+        //        speechUtterance.voice = AVSpeechSynthesisVoice(language: "hi-IN")
         print(translationLanguage)
         speechUtterance.voice = AVSpeechSynthesisVoice(language: translationLanguage)
         speechSynthesizer.speak(speechUtterance)
@@ -470,8 +478,8 @@ class CameraVC: UIViewController {
 extension CameraVC: AVCapturePhotoCaptureDelegate {
     
     func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
-      // Dispose of system sound before capture
-      AudioServicesDisposeSystemSoundID(1108)
+        // Dispose of system sound before capture
+        AudioServicesDisposeSystemSoundID(1108)
     }
     
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
@@ -507,7 +515,7 @@ extension CameraVC: AVCapturePhotoCaptureDelegate {
                 }
             }
             
-
+            
             captureImageView.isHidden = false
             captureImageView.alpha = 1.0
             
@@ -525,8 +533,8 @@ extension CameraVC: AVCapturePhotoCaptureDelegate {
 
 extension CameraVC: AVSpeechSynthesizerDelegate {
     func speechSynthesizer(_ synthesizer: AVSpeechSynthesizer, didFinish utterance: AVSpeechUtterance) {
-//        self.cameraView.isUserInteractionEnabled = false
-//        self.spinner.isHidden = false
-//        self.spinner.stopAnimating()
+        //        self.cameraView.isUserInteractionEnabled = false
+        //        self.spinner.isHidden = false
+        //        self.spinner.stopAnimating()
     }
 }
