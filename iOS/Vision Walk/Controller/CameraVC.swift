@@ -35,9 +35,10 @@ class CameraVC: UIViewController {
     var translationLanguage: String = "en-US"
     var languageChangedString: String = ""
     var isInternetAvailable: Bool = true
-    var englishFrenchTranslator: Translator!
     
-
+    var englishFrenchTranslator: Translator!
+    var captureTimer: Timer?
+    
     @IBOutlet weak var cameraView: UIView!
     @IBOutlet weak var captureImageView: UIImageView!
     @IBOutlet weak var flashBtn: UIButton!
@@ -278,17 +279,56 @@ class CameraVC: UIViewController {
             }
     }
     
+    func playHapticFeedback()
+    {
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: .heavy)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         previewLayer.frame = cameraView.bounds
         speechSynthesizer.delegate = self
+        
+        startCaptureTimer()
+        
+        // Observe UIApplicationDidEnterBackgroundNotification
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationDidEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+        
+        // Observe UIApplicationWillEnterForegroundNotification
+        NotificationCenter.default.addObserver(self, selector: #selector(applicationWillEnterForeground), name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func applicationDidEnterBackground() {
+        // Invalidate the timer when the application enters the background
+        // print("Invalidated Timer: applicationDidEnterBackground")
+        captureTimer?.invalidate()
+        captureTimer = nil
+    }
+    
+    @objc func applicationWillEnterForeground() {
+        // Reactivate the timer when the application enters the foreground
+        // print("Application is in Foreground: applicationWillEnterForeground")
+        startCaptureTimer()
+    }
+    
+    func startCaptureTimer() {
+        // Ensure the timer is not already running
+        guard captureTimer == nil else {
+            return
+        }
+        
+        // print("Started captureTimer.")
+        // Start the timer to capture photos every 15 seconds
+        captureTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(didTapCameraView), userInfo: nil, repeats: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
-        tap.numberOfTapsRequired = 1
+//        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapCameraView))
+//        tap.numberOfTapsRequired = 1
         
         captureSession = AVCaptureSession()
         captureSession.sessionPreset = AVCaptureSession.Preset.hd1920x1080
@@ -311,7 +351,7 @@ class CameraVC: UIViewController {
                 previewLayer.connection?.videoOrientation = AVCaptureVideoOrientation.portrait
                 
                 cameraView.layer.addSublayer(previewLayer!)
-                cameraView.addGestureRecognizer(tap)
+//                cameraView.addGestureRecognizer(tap)
                 captureSession.startRunning()
             }
         } catch {
@@ -325,9 +365,9 @@ class CameraVC: UIViewController {
         
         settings.previewPhotoFormat = settings.embeddedThumbnailPhotoFormat
         settings.flashMode = .auto
-
         
         cameraOutput.capturePhoto(with: settings, delegate: self)
+        
     }
     
     func resultsMethod(request: VNRequest, error: Error?) {
@@ -428,10 +468,19 @@ class CameraVC: UIViewController {
 }
 
 extension CameraVC: AVCapturePhotoCaptureDelegate {
+    
+    func photoOutput(_ output: AVCapturePhotoOutput, willCapturePhotoFor resolvedSettings: AVCaptureResolvedPhotoSettings) {
+      // Dispose of system sound before capture
+      AudioServicesDisposeSystemSoundID(1108)
+    }
+    
     func photoOutput(_ output: AVCapturePhotoOutput, didFinishProcessingPhoto photo: AVCapturePhoto, error: Error?) {
         if let error = error {
             debugPrint(error)
         } else {
+            
+            playHapticFeedback()
+            
             photoData = photo.fileDataRepresentation()
             
             let image = UIImage(data: photoData!)
