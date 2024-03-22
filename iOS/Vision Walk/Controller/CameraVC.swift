@@ -54,6 +54,19 @@ class CameraVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Check if it's the first launch
+        // Check for initial launch
+        let defaults = UserDefaults.standard
+        let hasLaunchedBefore = defaults.bool(forKey: "hasLaunchedBefore")
+        
+        if !hasLaunchedBefore {
+          // Run your first-launch method here (e.g., appMovedToForeground)
+            self.synthesizeSpeech(fromString: "Welcome to Vision Walk. The application will automatically capture the image and narrate the surrounding. Shake the device to change the language.")
+          
+          // Set flag to indicate launch has happened
+          defaults.set(true, forKey: "hasLaunchedBefore")
+        }
+        
         self.reachability = Reachability.init()
         
         reachability?.whenReachable = { _ in
@@ -79,7 +92,7 @@ class CameraVC: UIViewController {
         setupTranslate()
         
         let gradientLayer = CAGradientLayer()
-        gradientLayer.frame = roundedLblView.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
+        gradientLayer.frame = roundedLblView.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         
         gradientLayer.colors = [
             UIColor.clear.cgColor,  // Transparent start color
@@ -93,7 +106,7 @@ class CameraVC: UIViewController {
         
         
         // Add blurView with adjusted frame
-        let blurFrame = roundedLblView.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20))
+        let blurFrame = roundedLblView.bounds.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0))
         blurView.frame = blurFrame
         
         blurView.layer.cornerRadius = 10.0
@@ -143,16 +156,19 @@ class CameraVC: UIViewController {
         if reachability.isReachable{
             DispatchQueue.main.async {
                 self.internetLbl.text! = "Internet Available"
-                self.internetView.backgroundColor = .green
+                self.internetView.backgroundColor = .white
                 self.internetViewVisibility()
+                self.synthesizeSpeech(fromString: self.internetLbl.text!)
             }
         }else{
             DispatchQueue.main.async {
                 self.internetLbl.text! = "Internet Not Available"
-                self.internetView.backgroundColor = .red
-                self.internetViewVisibility()            }
+                self.internetView.backgroundColor = .white
+                self.internetViewVisibility()
+                self.synthesizeSpeech(fromString: self.internetLbl.text!)
+            }
         }
-        self.synthesizeSpeech(fromString: self.internetLbl.text!)
+        
         playHapticFeedback()
     }
     
@@ -331,7 +347,7 @@ class CameraVC: UIViewController {
         
         // print("Started captureTimer.")
         // Start the timer to capture photos every 15 seconds
-        captureTimer = Timer.scheduledTimer(timeInterval: 10, target: self, selector: #selector(didTapCameraView), userInfo: nil, repeats: true)
+        captureTimer = Timer.scheduledTimer(timeInterval: 12, target: self, selector: #selector(didTapCameraView), userInfo: nil, repeats: true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
