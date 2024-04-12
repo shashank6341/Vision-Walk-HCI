@@ -1,34 +1,9 @@
-# Vision Walk Image Captioning Server Setup
-
-- CD to your Directory
-- Run: python3 -m venv LLM
-- activate LLM venv by: source LLM/bin/activate
-- In that directory with LLM (venv) activated run: pip install transformers torch pillow flask
-- Once installed, run: python image_captioning.py. The application will run on localhost port 8090.
-- To expose this locally hosted server for testing on iOS, use ngrok.
-- Install ngrock from brew or there package.
-- Create an account and get your API key, (Instructions on the website).
-- ngrok http #portno of the localhosted application that you want to expose. *This will generate a string of web address use that*
-
-# Vision Walk iOS Setup
-
-- Install Xcode from App Store, It will ask you automatically to install the required SDK of iOS.
-- Clone this project.
-- CD to iOS and run Vision Walk.xcodeproj.
-- Make changes in the CameraVC.swift
-- Reachibility.swift is to check the internet connection.
-
-
-
 <br/>
 <p align="center">
   <h3 align="center">Vision Walk</h3>
 
   <p align="center">
     This repository contains the complete source code for the Vision Walk system.
-    <br/>
-    <br/>
-    <a href="https://github.com/shashank6341/Vision Walk HCI"><strong>Explore the docs »</strong></a>
     <br/>
     <br/>
     <a href="https://github.com/shashank6341/Vision Walk HCI">View Demo</a>
@@ -50,14 +25,10 @@
 * [Roadmap](#roadmap)
 * [Contributing](#contributing)
 * [Authors](#authors)
-* [Acknowledgements](#acknowledgements)
 
 ## About The Project
 
 ![180](https://github.com/shashank6341/Vision-Walk-HCI/assets/8446697/d48c9116-773e-42d7-9bcb-211c94a05122)
-
-
-
 
 Three components of Vision Walk are:
 
@@ -76,7 +47,7 @@ The development of the application was made possible by following tools and tech
 * [BLIP Image Captioning Large](https://huggingface.co/Salesforce/blip-image-captioning-large)
 * [Google MLKit Translate](https://developers.google.com/ml-kit/language/translation/ios)
 * [Postman](https://www.postman.com/)
-* [nrok](https://ngrok.com/)
+* [ngrok](https://ngrok.com/)
 * [Amazon Web Services](https://aws.amazon.com/)
 ## Getting Started
 
@@ -84,34 +55,86 @@ To get a local copy up and running follow these steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-
-* npm
+1. Setup a Virtual Environment (venv)
 
 ```sh
-npm install npm@latest -g
+python3 -m venv <venv-name>
+```
+
+2. Activate the virtual environment
+
+```sh
+source <venv-name>/bin/activate
+```
+
+3. Install the required packages
+
+```sh
+pip install transformers torch pillow flask
+```
+
+4. Install Brew utility
+
+```sh
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+```
+
+5. Install cocoapods
+
+```sh
+brew install cocoapods
+```
+
+6. Install ngrok
+
+```sh
+brew install ngrok/ngrok/ngrok
+```
+
+7. Install Xcode, command line tools and the iOS SDK.
+
+8. Generate Ngrok auth key from the ngrok website.
+
+9. Enter your ngrok API key
+    
+```sh
+ngrok config add-authtoken <your-auth-key>
 ```
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
+1. Clone this repository.
 
-2. Clone the repo
+```sh
+https://github.com/shashank6341/Vision-Walk-HCI.git
+```
+
+2. Navigate to the repository
+
+3. Install PODS in the iOS folder.
+
+```sh
+pods install
+```
+
+4. Run the project with Vision Walk.xcworkspace
+   
+5. 
 
 ```sh
 git clone https://github.com/your_username_/Project-Name.git
 ```
 
-3. Install NPM packages
+3. Start the blip_caption_server.py server
 
 ```sh
-npm install
+python3 blip_caption_server.py
 ```
 
-4. Enter your API in `config.js`
+4. Expose your local python server through ngrok.
 
 ```JS
-const API_KEY = 'ENTER YOUR API';
+ngrok http <port-no>
 ```
 
 ## Usage
@@ -158,9 +181,3 @@ Contributions are what make the open source community such an amazing place to b
 * **[Kenish Halani](https://github.com/shashank6341/)** - *Concordia University*
 * **[Riddhi Bhuva](https://github.com/shashank6341/)** - *Concordia University*
 * **[Rohit Rohit](https://github.com/shashank6341/)** - *Concordia University*
-
-## Acknowledgements
-
-* []()
-* []()
-* []()
