@@ -1,14 +1,3 @@
-# Vision-Walk-HCI
-This repository contains the source code for the Vision Walk application.
-
-# Branch Pattern
-
-** Create a new branch for each new feature or a sub-feature for easy debugging. **
-
-- feature/{feature-name}
-- Once tested and working as expected.
-- Create a PR from feature to main.
-
 # Vision Walk Image Captioning Server Setup
 
 - CD to your Directory
@@ -36,7 +25,7 @@ This repository contains the source code for the Vision Walk application.
   <h3 align="center">Vision Walk</h3>
 
   <p align="center">
-    Vision Walk
+    This repository contains the complete source code for the Vision Walk system.
     <br/>
     <br/>
     <a href="https://github.com/shashank6341/Vision Walk HCI"><strong>Explore the docs »</strong></a>
@@ -44,9 +33,9 @@ This repository contains the source code for the Vision Walk application.
     <br/>
     <a href="https://github.com/shashank6341/Vision Walk HCI">View Demo</a>
     .
-    <a href="https://github.com/shashank6341/Vision Walk HCI/issues">Report Bug</a>
+    <a href="https://github.com/shashank6341/Vision-Walk-HCI/issues">Report Bug</a>
     .
-    <a href="https://github.com/shashank6341/Vision Walk HCI/issues">Request Feature</a>
+    <a href="https://github.com/shashank6341/Vision-Walk-HCI/issues">Request Feature</a>
   </p>
 </p>
 
@@ -81,11 +70,17 @@ A list of commonly used resources that I find helpful are listed in the acknowle
 
 ## Built With
 
-The development of the application was made possible by following technologies
+The development of the application was made possible by following tools and technologies.
 
-* [Swift](link)
-* [Python](link)
-
+* [Swift](https://developer.apple.com/swift/)
+* [Python](https://www.python.org/)
+* [Xcode](https://developer.apple.com/xcode/)
+* [Instrument](https://developer.apple.com/documentation/xcode/gathering-information-about-memory-use)
+* [BLIP Image Captioning Large](https://huggingface.co/Salesforce/blip-image-captioning-large)
+* [Google MLKit Translate](https://developers.google.com/ml-kit/language/translation/ios)
+* [Postman](https://www.postman.com/)
+* [nrok](https://ngrok.com/)
+* [Amazon Web Services](https://aws.amazon.com/)
 ## Getting Started
 
 This is an example of how you may give instructions on setting up your project locally.
@@ -125,9 +120,11 @@ const API_KEY = 'ENTER YOUR API';
 
 ## Usage
 
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+The system is in experimental stage and can infer incorrect results. Please test the system in safe environments.
 
-_For more examples, please refer to the [Documentation](https://example.com)_
+Launch the system and it will automatically capture the surrounding environments. Test across various scenarios and raise a new issues incase you encounter any issues or have improvements suggestion.
+
+** Add system demo images _For more examples, please refer to the [Documentation](https://example.com)_**
 
 ## Roadmap
 
@@ -139,7 +136,14 @@ Contributions are what make the open source community such an amazing place to b
 * If you have suggestions for adding or removing projects, feel free to [open an issue](https://github.com/shashank6341/Vision Walk HCI/issues/new) to discuss it, or directly create a pull request after you edit the *README.md* file with necessary changes.
 * Please make sure you check your spelling and grammar.
 * Create individual PR for each suggestion.
-* Please also read through the [Code Of Conduct](https://github.com/shashank6341/Vision Walk HCI/blob/main/CODE_OF_CONDUCT.md) before posting your first idea as well.
+
+## Branch Pattern
+
+** Create a new branch for each new feature or a sub-feature for easy debugging. **
+
+- feature/{feature-name}
+- Once tested and working as expected.
+- Create a PR from feature to main.
 
 ### Creating A Pull Request
 
@@ -151,7 +155,13 @@ Contributions are what make the open source community such an amazing place to b
 
 ## Authors
 
-* **Shashank Verma** - *Software Engineering Student@Concordia* - [Shashank Verma](https://github.com/shashank6341/) - **
+* **[Shashank Verma](https://github.com/shashank6341/)** - *Concordia University*
+* **[Ayushi Chaudhary](https://github.com/shashank6341/)** - *Concordia University*
+* **[Het Dalal](https://github.com/shashank6341/)** - *Concordia University*
+* **[Khyati Bareja](https://github.com/shashank6341/)** - *Concordia University*
+* **[Kenish Halani](https://github.com/shashank6341/)** - *Concordia University*
+* **[Riddhi Bhuva](https://github.com/shashank6341/)** - *Concordia University*
+* **[Rohit Rohit](https://github.com/shashank6341/)** - *Concordia University*
 
 ## Acknowledgements
 
