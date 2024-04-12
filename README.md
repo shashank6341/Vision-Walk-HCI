@@ -39,8 +39,6 @@
   </p>
 </p>
 
-![Contributors](https://img.shields.io/github/contributors/shashank6341/Vision Walk HCI?color=dark-green) ![Issues](https://img.shields.io/github/issues/shashank6341/Vision Walk HCI) ![License](https://img.shields.io/github/license/shashank6341/Vision Walk HCI) 
-
 ## Table Of Contents
 
 * [About the Project](#about-the-project)
@@ -56,17 +54,16 @@
 
 ## About The Project
 
-![Screen Shot](images/screenshot.png)
+![180](https://github.com/shashank6341/Vision-Walk-HCI/assets/8446697/d48c9116-773e-42d7-9bcb-211c94a05122)
 
-Vision Walk Description
+
+
 
 Three components of Vision Walk are:
 
-* Your time should be focused on creating something amazing. A project that solves a problem and helps others
-* You shouldn't be doing the same tasks over and over like creating a README from scratch
-* You should element DRY principles to the rest of your life :smile:
-
-A list of commonly used resources that I find helpful are listed in the acknowledgements.
+* iOS end user system that automatically captures the user environment and describes it.
+* A python server that processes and compresses the received uncompressed JPEG image.
+* An Inference server: BLIP captioning model that processed the image and returns the caption.
 
 ## Built With
 
@@ -83,8 +80,7 @@ The development of the application was made possible by following tools and tech
 * [Amazon Web Services](https://aws.amazon.com/)
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these steps.
 
 ### Prerequisites
 
