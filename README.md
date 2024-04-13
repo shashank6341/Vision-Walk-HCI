@@ -11,6 +11,10 @@
     <a href="https://github.com/shashank6341/Vision-Walk-HCI/issues">Report Bug</a>
     .
     <a href="https://github.com/shashank6341/Vision-Walk-HCI/issues">Request Feature</a>
+    .
+    <a href="https://youtu.be/mFafPWAMyGI">Teaser Video Youtube Link</a>
+    .
+    <a href="https://drive.google.com/file/d/1Ub1DerILGPfMdlopZzj9PYLwANlQ60an/view?usp=sharing">Teaser Video Drive Link</a>
   </p>
 </p>
 
